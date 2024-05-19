@@ -20,6 +20,10 @@ struct ContentView: View {
                 btn(anim: .easeOut(duration: 3), isExpanded: $isExp, text: "Ease Out")
                 btn(anim: .easeInOut(duration: 3), isExpanded: $isExp, text: "Ease InOut")
             }
+            HStack {
+                btn(anim: .spring(), isExpanded: $isExp, text: "Spring")
+                btn(anim: .bouncy, isExpanded: $isExp, text: "Bouncy")
+            }
         }
     }
 }
@@ -27,27 +31,36 @@ struct ContentView: View {
 struct btn: View {
     var anim: Animation
     @Binding var isExpanded: Bool
+    @State private var color = btn.randomColor()
     var text: String
     
     var body: some View {
         VStack {
             Rectangle()
-                .fill(Color.blue)
+                .fill(color)
                 .frame(width: isExpanded ? 200 : 100, height: isExpanded ? 200 : 100)
                 .animation(anim, value: isExpanded)
             
             Button(action: {
                 withAnimation(anim) {
                     isExpanded.toggle()
+                    color = btn.randomColor()
                 }
             }) {
                 Text(text)
             }
         }
     }
+    
+    static func randomColor() -> Color {
+        return Color(
+            red: Double.random(in: 0...1),
+            green: Double.random(in: 0...1),
+            blue: Double.random(in: 0...1)
+        )
+    }
 }
 
 #Preview {
     ContentView()
 }
-
