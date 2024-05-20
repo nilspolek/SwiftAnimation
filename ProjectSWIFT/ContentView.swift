@@ -39,7 +39,7 @@ struct btn: View {
             Rectangle()
                 .fill(color)
                 .frame(width: isExpanded ? 200 : 100, height: isExpanded ? 200 : 100)
-                .animation(anim, value: isExpanded)
+                
             
             Button(action: {
                 withAnimation(anim) {
@@ -49,7 +49,7 @@ struct btn: View {
             }) {
                 Text(text)
             }
-        }
+        }.animation(anim, value: isExpanded)
     }
     
     static func randomColor() -> Color {
